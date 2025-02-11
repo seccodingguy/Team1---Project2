@@ -1,1 +1,2 @@
 # Team1---Project2
+problem trying to solve thru our Machine learning model is we want to predict the future head count with the number of  farm animals and poultry and fish and seafood that is need to be needed to fullfill the amounts needed for future population   
