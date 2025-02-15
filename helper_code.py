@@ -1,11 +1,12 @@
 import pandas as pd
 import numpy as np
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, Lasso
 from sklearn.metrics import balanced_accuracy_score, accuracy_score, confusion_matrix, roc_auc_score, mean_squared_error, r2_score, mean_absolute_error
 import matplotlib.pyplot as plt
 from datetime import datetime
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingRegressor
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
 # Year to start the prediction
@@ -31,6 +32,70 @@ def split_into_training_and_test(X, Y, test_perc = 0.2, random_state_val = 42):
     # Split the data into training and testing sets (80-20 split)
     X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=random_state_val)
     return X_train, X_test, y_train, y_test
+
+def train_and_predict_lasso(df, country, country_column_name, population_column_name, year_column_name, meat_category, future_years=7):
+    
+    df_test = get_data()
+    
+    # Feature selection
+    features = [year_column_name, population_column_name, meat_category]
+    target_population = country
+    target_meat = meat_category
+
+    # Filter data for training
+    X = df_test[features]
+    y_population = df_test[target_population]
+    y_meat = df_test[target_meat]
+    
+    X_train_pop, X_test_pop, y_pop_train, y_pop_test = train_test_split(X, y_population, test_size=0.2, random_state=42)
+    _, _, y_meat_train, y_meat_test = train_test_split(X, y_meat, test_size=0.2, random_state=42)
+    
+    # Scale the data
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train_pop)
+    X_test_scaled = scaler.transform(X_test_pop)
+    
+    # Generate future years for prediction
+    future_X = np.array(range(year_to_start_prediction, year_to_start_prediction + future_years)).reshape(-1, 1)
+
+    # Scale the data
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train_pop)
+    X_test_scaled = scaler.transform(X_test_pop)
+    
+    # Create and train models
+    model_pop = Lasso(alpha=0.1)
+    model_meat = Lasso(alpha=0.1)
+    
+    model_pop.fit(X_train_scaled, y_pop_train)
+    model_meat.fit(X_train_scaled, y_meat_train)
+
+    # Evaluate the models
+    y_population_pred = model_pop.predict(X_test_scaled)
+    y_meat_pred = model_meat.predict(X_test_scaled)
+    
+    # Predict for the future years
+    future_years = pd.DataFrame({
+        "Year": np.arange(year_to_start_prediction, year_to_start_prediction + future_years),
+        population_column_name: [0] * future_years,  # Placeholder
+        meat_category: [0] * future_years,  # Placeholder
+    })
+    
+    # Scale future data
+    future_years_scaled = scaler.transform(future_years)
+
+    # Make predictions
+    pop_predictions = model_pop.predict(future_years_scaled)
+    meat_predictions = model_meat.predict(future_years_scaled)
+    
+    print(pop_predictions)
+    print(meat_predictions)
+    
+    # Calculate metrics
+    metrics_pop = None #calculate_metrics(y_pop_test, pop_predictions)
+    metrics_meat = None #calculate_metrics(y_meat_test, meat_predictions)
+    
+    return future_X.flatten(), pop_predictions, meat_predictions, metrics_pop, metrics_meat
 
 def train_and_predict_dt(df, country, country_column_name, population_column_name, year_column_name, meat_category, future_years=7):
     country_data, X, y_pop = filter_and_prepare_training_data(df,country_column_name,country,year_column_name,population_column_name)
@@ -168,6 +233,8 @@ def evaluate_model(model, X_train, X_test, y_train, y_test):
 
 def calculate_metrics(y_values, prediction):
     metrics = {}
+    print(y_values)
+    print(prediction)
     mse_val = mean_squared_error(y_values, prediction)
     metrics["mse"] = mse_val
     metrics["rmse"] = np.sqrt(mse_val)
@@ -219,13 +286,15 @@ def main():
     for country in countries:
         print(f"\nPredictions for {country}:")
         
-        years, pop_pred, meat_pred, metrics_pop, metrics_meat = train_and_predict_lr(filtered_population_df, country, 'Entity', 'population_historical', 'Year', 'Poultry', future_years)
-        gb_years, gb_pop_pred, gb_meat_pred, gb_metrics_pop, gb_metrics_meat = train_and_predict_xgboost(filtered_population_df, country, 'Entity', 'population_historical', 'Year', 'Poultry', future_years)
-        dt_years, dt_pop_pred, dt_meat_pred, dt_metrics_pop, dt_metrics_meat = train_and_predict_dt(filtered_population_df, country, 'Entity', 'population_historical', 'Year', 'Poultry', future_years)
+        #years, pop_pred, meat_pred, metrics_pop, metrics_meat = train_and_predict_lr(filtered_population_df, country, 'Entity', 'population_historical', 'Year', 'Poultry', future_years)
+        #gb_years, gb_pop_pred, gb_meat_pred, gb_metrics_pop, gb_metrics_meat = train_and_predict_xgboost(filtered_population_df, country, 'Entity', 'population_historical', 'Year', 'Poultry', future_years)
+        #dt_years, dt_pop_pred, dt_meat_pred, dt_metrics_pop, dt_metrics_meat = train_and_predict_dt(filtered_population_df, country, 'Entity', 'population_historical', 'Year', 'Poultry', future_years)
+        ls_years, ls_pop_pred, ls_meat_pred, ls_metrics_pop, ls_metrics_meat = train_and_predict_lasso(filtered_population_df, country, 'Entity', 'population_historical', 'Year', 'Poultry', future_years)
         
-        print_prediction(years,pop_pred, meat_pred, metrics_pop, metrics_meat,"LinearRegression")
-        print_prediction(gb_years,gb_pop_pred, gb_meat_pred, gb_metrics_pop, gb_metrics_meat,"GradientBoosting")
-        print_prediction(dt_years,gb_pop_pred, dt_meat_pred, dt_metrics_pop, dt_metrics_meat,"DecisionTree")
+        #print_prediction(years,pop_pred, meat_pred, metrics_pop, metrics_meat,"LinearRegression")
+        #print_prediction(gb_years,gb_pop_pred, gb_meat_pred, gb_metrics_pop, gb_metrics_meat,"GradientBoosting")
+        #print_prediction(dt_years,dt_pop_pred, dt_meat_pred, dt_metrics_pop, dt_metrics_meat,"DecisionTree")
+        print_prediction(ls_years,ls_pop_pred, ls_meat_pred, ls_metrics_pop, ls_metrics_meat,"LassoRegression")
                 
         # Plot the results
         #df, country, future_years, pop_pred, meat_pred, country_column_name, year_column_name, population_column_name, meat_column_name, meat_category
@@ -246,9 +315,9 @@ def print_prediction(years_list,pop_predicted_df, meat_predicted_df, metrics_pop
     print(f"\nModel scores:")
         
     print(f"Population:")
-    print(print_metrics(metrics_pop))
+    #print(print_metrics(metrics_pop))
     print(f"Meat Consumption:")
-    print(print_metrics(metrics_meat))
+    #print(print_metrics(metrics_meat))
 
 
 def print_metrics(metrics_info):
