@@ -1,0 +1,102 @@
+<!-- Charts Section -->
+<div class="bg-white rounded-lg shadow-lg p-6">
+    <h2 class="text-2xl font-bold text-gray-900 mb-6">Prediction Charts</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Population Chart -->
+        <div>
+            <h3 class="text-lg font-medium text-gray-700 mb-4">Population Predictions</h3>
+            <div class="h-80">
+                <canvas id="population-chart"></canvas>
+            </div>
+        </div>
+        <!-- Meat Consumption Chart -->
+        <div>
+            <h3 class="text-lg font-medium text-gray-700 mb-4">Meat Consumption Predictions</h3>
+            <div class="h-80">
+                <canvas id="meat-chart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Grid Search Results -->
+<div class="bg-white rounded-lg shadow-lg p-6">
+    <h2 class="text-2xl font-bold text-gray-900 mb-6">Grid Search Results</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Ridge Grid Search Results -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-medium text-gray-700 mb-4">Ridge Regression Parameters</h3>
+            <div id="ridge-grid-search" class="space-y-4">
+                <div class="grid-search-plot h-64">
+                    <canvas id="ridge-params-chart"></canvas>
+                </div>
+                <div id="ridge-best-params" class="mt-4 text-sm"></div>
+            </div>
+        </div>
+        <!-- Lasso Grid Search Results -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-medium text-gray-700 mb-4">Lasso Regression Parameters</h3>
+            <div id="lasso-grid-search" class="space-y-4">
+                <div class="grid-search-plot h-64">
+                    <canvas id="lasso-params-chart"></canvas>
+                </div>
+                <div id="lasso-best-params" class="mt-4 text-sm"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Actual vs Predicted Plots -->
+<div class="bg-white rounded-lg shadow-lg p-6">
+    <h2 class="text-2xl font-bold text-gray-900 mb-6">Actual vs Predicted Values</h2>
+    
+    <!-- Population Predictions -->
+    <div class="mb-8">
+        <h3 class="text-xl font-semibold text-gray-700 mb-4">Population Predictions</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="text-lg font-medium text-gray-700 mb-4">Linear Regression</h4>
+                <div class="h-64">
+                    <canvas id="linear-population-scatter"></canvas>
+                </div>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="text-lg font-medium text-gray-700 mb-4">Lasso Regression</h4>
+                <div class="h-64">
+                    <canvas id="lasso-population-scatter"></canvas>
+                </div>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="text-lg font-medium text-gray-700 mb-4">Ridge Regression</h4>
+                <div class="h-64">
+                    <canvas id="ridge-population-scatter"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meat Consumption Predictions -->
+    <div>
+        <h3 class="text-xl font-semibold text-gray-700 mb-4">Meat Consumption Predictions</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="text-lg font-medium text-gray-700 mb-4">Linear Regression</h4>
+                <div class="h-64">
+                    <canvas id="linear-meat-scatter"></canvas>
+                </div>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="text-lg font-medium text-gray-700 mb-4">Lasso Regression</h4>
+                <div class="h-64">
+                    <canvas id="lasso-meat-scatter"></canvas>
+                </div>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="text-lg font-medium text-gray-700 mb-4">Ridge Regression</h4>
+                <div class="h-64">
+                    <canvas id="ridge-meat-scatter"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

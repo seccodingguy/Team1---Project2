@@ -1,0 +1,109 @@
+@startuml
+class Flask {
+    - config : dict
+    - secret_key : str
+    + route(rule: str, methods: list)
+    + run(debug: bool)
+    + render_template(template_name_or_list: str, **context)
+    + jsonify(data: dict)
+}
+
+class Config {
+    + SECRET_KEY : str
+    + STATIC_FOLDER : str
+    + TEMPLATES_FOLDER : str
+}
+
+class Session {
+    + SESSION_TYPE : str
+    + SESSION_REDIS : Redis
+}
+
+class Redis {
+}
+
+class DataFrame {
+    + columns : list
+    + to_json(orient: str) : str
+    + unique() : list
+    + max() : int
+    + fillna(value: int, inplace: bool)
+}
+
+class LinearRegression {
+    + fit(X: array, y: array)
+    + predict(X: array) : array
+}
+
+class Lasso {
+    + fit(X: array, y: array)
+    + predict(X: array) : array
+}
+
+class Ridge {
+    + fit(X: array, y: array) : array
+    + predict(X: array) : array
+}
+
+class StandardScaler {
+    + fit_transform(X: array) : array
+    + transform(X: array) : array
+}
+
+class GridSearchCV {
+    + fit(X: array, y: array)
+    + best_params_ : dict
+    + cv_results_ : dict
+}
+
+class Utils {
+    + year_to_start_prediction : int
+    + future_years : int
+    + features_set : list
+    + future : int
+    + year : int
+    + meat_option : str
+    + plot_models : dict
+    + countries_selected : list
+    + lasso_best_performance : dict
+    + ridge_best_performance : dict
+    + population_column_name : str
+    + country_column_name : str
+    + get_data() : DataFrame
+    + calculate_metrics(y_true: array, y_pred: array) : dict
+    + get_meat_consumption_features(meat_category: str) : list
+    + get_future_years_df(year_to_start_prediction: int, future_years: int) : DataFrame
+    + get_lasso_best_score(X_train_scaled: array, y_train: array) : tuple
+    + get_ridge_best_score(X_train_scaled: array, y_train: array) : tuple
+    + convert_to_native(value: any) : any
+}
+
+class Models {
+    + train_and_predict_lr(df: DataFrame, country: str, country_column_name: str, population_column_name: str, year_column_name: str, meat_category: str, future_years: int) : tuple
+    + train_and_predict_lasso(df: DataFrame, country: str, country_column_name: str, population_column_name: str, year_column_name: str, meat_category: str, future_years: int) : tuple
+    + train_and_predict_ridge(df: DataFrame, country: str, country_column_name: str, population_column_name: str, year_column_name: str, meat_category: str, future_years: int) : tuple
+}
+
+class App {
+    - app : Flask
+    + index()
+    + plots()
+    + results()
+    + predict()
+}
+
+App "1" -- "1" Flask : creates
+Flask "1" -- "1" Config : uses
+App "1" -- "1" Utils : uses
+App "1" -- "1" Models : uses
+App "1" -- "1" Session : uses
+Session "1" -- "1" Redis : uses
+
+Models "1" -- "1" Utils : uses
+Models "1" -- "0..*" LinearRegression : uses
+Models "1" -- "0..*" Lasso : uses
+Models "1" -- "0..*" Ridge : uses
+Models "1" -- "0..*" StandardScaler : uses
+Models "1" -- "0..1" GridSearchCV : uses // Models uses GridSearchCV indirectly through Utils
+Utils "1" -- "0..*" DataFrame : creates, reads
+@enduml

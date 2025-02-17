@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meat Consumption Predictor</title>
+    <!-- External Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-4">
+    <div class="container mx-auto max-w-7xl">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Meat Consumption Predictor</h1>
+            <p class="text-gray-600">Compare predictions across different regression models</p>
+        </header>
+
+         <!-- Input Form -->
+         <form id="prediction-form" class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6 mb-8">
+            <div class="grid grid-cols-1 gap-6">
+                <!-- Country Selection -->
+                <div>
+                    <label for="country" class="block text-sm font-medium text-gray-700 mb-2">Country</label>
+                    <select id="country" name="country" required
+                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">Select a country</option>
+                        {% for country in countries %}
+                        <option value="{{ country }}">{{ country }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Meat Category Selection -->
+                <div>
+                    <label for="meat_category" class="block text-sm font-medium text-gray-700 mb-2">Meat Category</label>
+                    <select id="meat_category" name="meat_category" required
+                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">Select a meat category</option>
+                        {% for category in meat_categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Start Year Input -->
+                <div>
+                    <label for="start_year" class="block text-sm font-medium text-gray-700 mb-2">Start Year</label>
+                    <input type="number" id="start_year" name="start_year"
+                           min="2021" max="2030" value="2021" required
+                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                </div>
+
+                <!-- Future Years Input -->
+                <div>
+                    <label for="future_years" class="block text-sm font-medium text-gray-700 mb-2">Number of Years to Predict</label>
+                    <input type="number" id="future_years" name="future_years"
+                           min="1" max="10" value="5" required
+                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                </div>
+
+                <!-- Submit Button -->
+                <div>
+                    <button type="submit"
+                            class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        Generate Predictions
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Results Section -->
+        <div id="results-section" class="hidden">
+            <!-- Loading State -->
+            <div id="loading-indicator" class="text-center py-12">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+                <p class="text-gray-600">Generating predictions...</p>
+            </div>
+
+            <!-- Error Message -->
+            <div id="error-message" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <strong class="font-bold">Error!</strong>
+                <span id="error-text" class="block sm:inline"></span>
+            </div>
+
+            <!-- Results Content -->
+            <div id="results-content" class="hidden space-y-8">
+                <div id="plots-container"></div>
+                <div id="results-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/app.js"></script>
+</body>
+</html>
