@@ -4,6 +4,13 @@
 
 # Meat Consumption Prediction
 
+## Title: "Predicting the Future of Food: An Introduction to Meat Consumption Prediction"
+### Content to include:
+## Why is meat consumption prediction important? (Food security, environmental impact, economic planning)
+## Overview of the Meat Consumption Predictor application and its goals.
+## High-level explanation of the technologies used (scikit-learn, Pandas, GridSearchCV).
+## Briefly introduce the machine learning models (Linear Regression, Lasso, Ridge).
+
 ## Summary
 
 The goal of this research is to use machine learning techniques to assess and forecast patterns in meat consumption. To anticipate future trends of meat consumption, the Jupyter Notebook **MeatConsumptionPrediction.ipynb** uses predictive modeling, exploratory data analysis (EDA), and data preprocessing.
@@ -16,6 +23,8 @@ The goal of this research is to use machine learning techniques to assess and fo
 - **Model Evaluation:** Performance assessment using appropriate metrics.
 
 ## Installation
+
+# [UPDATE]: Create 2 installation sections: Jupyter Notebook and the Flask Web Application. For the Flask Web Application, put a link to the ReadMe in the population-meat-predictor folder.
 
 To run this project, install the required dependencies:
 
