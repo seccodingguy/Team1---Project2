@@ -1,19 +1,51 @@
-# Team1---Project2
+# "Predicting the Future of Food: An Introduction to Meat Consumption Prediction" 
+## Team1---Project2
 
 ### README.md
 
 # Meat Consumption Prediction
 
-## Title: "Predicting the Future of Food: An Introduction to Meat Consumption Prediction"
-### Content to include:
 ## Why is meat consumption prediction important? (Food security, environmental impact, economic planning)
+
+In essence, accurate meat consumption predictions help balance the growing global demand for food with the need for environmental sustainability, economic development, and public health, ensuring a healthier and more sustainable future.
+
+Here are some of the key reasons:
+
+1. **Environmental Impact**
+Land and Water Use: Livestock farming requires significant amounts of land and water. Predicting meat demand helps ensure better resource management and planning to avoid deforestation, water shortages, and land degradation.
+Biodiversity: Large-scale meat production often leads to habitat destruction, threatening wildlife biodiversity. Understanding future trends in meat consumption enables efforts to minimize these impacts.
+
+2. **Food Security**
+Sustainable Food Systems: Predicting meat consumption allows governments and organizations to balance the demand for animal protein with the need for sustainable food systems, ensuring equitable food distribution for growing populations.
+Alternative Proteins: Accurate predictions can guide investment in plant-based or lab-grown meat alternatives, reducing reliance on traditional meat production and improving food security.
+
+3. **Economic Implications**
+Market Trends: Meat consumption predictions are crucial for businesses in the agriculture and food industries to anticipate demand, prevent waste, and optimize production.
+Global Trade: Countries that rely on meat export or import use consumption predictions to refine trade policies and maintain economic stability.
+Cost Management: Predicting shifts in meat consumption helps governments and industries manage fluctuations in meat prices, ensuring affordability for consumers.
+4. **Public Health**
+Dietary Trends: Changes in meat consumption affect public health outcomes. Overconsumption of red and processed meats is linked to health issues like heart disease, cancer, and obesity, while underconsumption can lead to nutrient deficiencies.
+Disease Risk: Predicting meat consumption patterns helps track risks of zoonotic diseases (e.g., avian flu, swine flu), ensuring preparedness and prevention strategies.
+Nutrition Policies: Governments can use predictions to design public health campaigns promoting balanced diets and sustainable food choices.
+5. **Social and Cultural Dynamics**
+Cultural Shifts: Meat consumption trends reflect changing cultural and ethical attitudes toward food, including the rise of vegetarianism, veganism, and flexitarian diets.
+Consumer Awareness: Predictions help organizations align their messaging with consumer concerns about sustainability, animal welfare, and health.
+
 ## Overview of the Meat Consumption Predictor application and its goals.
-## High-level explanation of the technologies used (scikit-learn, Pandas, GridSearchCV).
+
+The goal of this research is to use machine learning techniques to assess and forecast patterns in meat consumption. To anticipate future trends of meat consumption, the Jupyter Notebook **MeatConsumptionPrediction.ipynb** and the **Interactive Flask-based Web Application** uses predictive modeling, exploratory data analysis (EDA), and data preprocessing.
+
 ## Briefly introduce the machine learning models (Linear Regression, Lasso, Ridge).
 
-## Summary
+1. **Linear Regression**
+Linear Regression is a simple and widely used model for predicting a continuous target variable based on one or more input features. It assumes a linear relationship between the input variables (features) and the output variable (target).
 
-The goal of this research is to use machine learning techniques to assess and forecast patterns in meat consumption. To anticipate future trends of meat consumption, the Jupyter Notebook **MeatConsumptionPrediction.ipynb** uses predictive modeling, exploratory data analysis (EDA), and data preprocessing.
+2. **Lasso Regression**
+Lasso (Least Absolute Shrinkage and Selection Operator) is a variation of linear regression that adds an L1 regularization term to the loss function. This encourages sparsity in the model by shrinking some coefficients to exactly zero, effectively performing feature selection.
+
+3. **Ridge Regression**
+Ridge Regression is another variation of linear regression that adds an L2 regularization term to the loss function. This penalizes large coefficients, preventing overfitting by shrinking them without forcing them to zero.
+
 
 ## Features
 
@@ -87,7 +119,7 @@ The dataset used in this project contains historical meat consumption data from 
 
 ## Contributors
 
-- **Work colaberation was handled in a group consistency effort for every part of our project** 
+- **Work collaberation was handled in a group consistency effort for every part of our project** 
 
 - **Mark Wireman** 
 - **Lauren Belling**
