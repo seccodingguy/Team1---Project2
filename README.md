@@ -23,6 +23,7 @@ The goal of this research is to use machine learning techniques to assess and fo
 - **Model Evaluation:** Performance assessment using appropriate metrics.
 
 ## Installation
+[Readme File](Readme.md)
 
 # [UPDATE]: Create 2 installation sections: Jupyter Notebook and the Flask Web Application. For the Flask Web Application, put a link to the ReadMe in the population-meat-predictor folder.
 
