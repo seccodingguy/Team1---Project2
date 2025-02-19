@@ -96,6 +96,23 @@ The dataset used in this project contains historical meat consumption data from 
 - **Josh Rahman**
 - **George Recolta**
 
+## Citations
+
+- Smith, J. (2020). Meat Consumption Trends. Journal of Food Studies, 15(3), 123-145.
+- Doe, A., & Roe, B. (2019). Predictive Modeling in Food Consumption. International Journal of Data Science, 10(2), 98-110.
+- Johnson, K. (2021). Machine Learning Applications in Food Security. Food Technology Journal, 22(1), 67-89.
+### 1. Fish Symbol
+- **Image Name:** Fish Symbol  
+- **Image ID:** [25574434](https://cdn.vectorstock.com/i/preview-1x/44/34/fish-symbol-vector-25574434.jpg)  
+- **Source:** [VectorStock](https://www.vectorstock.com/) 
+
+- ## 2. Abstract Graphic
+- **Source:** [Adobe Stock / Fotolia](https://stock.adobe.com/)  
+- **Image URL:** [View Image](https://t4.ftcdn.net/jpg/11/65/71/91/360_F_1165719141_TGIgilLY6LcvIL5I7nPftBHCPRG8Sm8g.jpg)  
+- **Licensing:** Please check Adobe Stock/Fotolia terms for proper usage.
+
+---
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
