@@ -111,6 +111,7 @@ def predict():
             return jsonify({'error': 'Error generating predictions. Please try different parameters.'}), 500
 
         print("Preparing the results.")
+        
         # Prepare results
         results = {}
         results['linear_regression'] = {
@@ -122,7 +123,11 @@ def predict():
                 'population_actual': [float(x) for x in plot_models['linear_population']['y_test']],
                 'population_predicted': [float(x) for x in plot_models['linear_population']['prediction']],
                 'meat_actual': [float(x) for x in plot_models['linear_meat']['y_test']],
-                'meat_predicted': [float(x) for x in plot_models['linear_meat']['prediction']]
+                'meat_predicted': [float(x) for x in plot_models['linear_meat']['prediction']],
+                'meat_bagged' : [float(x) for x in plot_models['linear_bagging_meat']],
+                'population_bagged' : [float(x) for x in plot_models['linear_bagging_population']],
+                'meat_noise' : [float(x) for x in plot_models['linear_noise_population']['prediction']],
+                'population_noise' : [float(x) for x in plot_models['linear_noise_population']['prediction']]
             }
         
         jsonify(results)
@@ -137,7 +142,11 @@ def predict():
                 'population_actual': [float(x) for x in plot_models_lasso['lasso_population']['y_test']],
                 'population_predicted': [float(x) for x in plot_models_lasso['lasso_population']['prediction']],
                 'meat_actual': [float(x) for x in plot_models_lasso['lasso_meat']['y_test']],
-                'meat_predicted': [float(x) for x in plot_models_lasso['lasso_meat']['prediction']]
+                'meat_predicted': [float(x) for x in plot_models_lasso['lasso_meat']['prediction']],
+                'meat_bagged' : [float(x) for x in plot_models_lasso['lasso_bagging_meat']],
+                'population_bagged' : [float(x) for x in plot_models_lasso['lasso_bagging_population']],
+                'meat_noise' : [float(x) for x in plot_models_lasso['lasso_noise_population']['prediction']],
+                'population_noise' : [float(x) for x in plot_models_lasso['lasso_noise_population']['prediction']]
             }
         
         jsonify(results)
@@ -152,7 +161,11 @@ def predict():
                 'population_actual': [float(x) for x in plot_models_ridge['ridge_population']['y_test']],
                 'population_predicted': [float(x) for x in plot_models_ridge['ridge_population']['prediction']],
                 'meat_actual': [float(x) for x in plot_models_ridge['ridge_meat']['y_test']],
-                'meat_predicted': [float(x) for x in plot_models_ridge['ridge_meat']['prediction']]
+                'meat_predicted': [float(x) for x in plot_models_ridge['ridge_meat']['prediction']],
+                'meat_bagged' : [float(x) for x in plot_models_ridge['ridge_bagging_meat']],
+                'population_bagged' : [float(x) for x in plot_models_ridge['ridge_bagging_population']],
+                'meat_noise' : [float(x) for x in plot_models_ridge['ridge_noise_population']['prediction']],
+                'population_noise' : [float(x) for x in plot_models_ridge['ridge_noise_population']['prediction']]
             }
         
         jsonify(results)

@@ -1,4 +1,7 @@
 @startuml
+
+title Population Meat Predictor Flask Application Class Diagram
+
 class Flask {
     - config : dict
     - secret_key : str

@@ -247,22 +247,102 @@ const createScatterPlot = (model, metric, data) => {
    
     if (!data[modelKey] || 
         !data[modelKey][`${metric}_actual`] || 
-        !data[modelKey][`${metric}_predicted`]) {
+        !data[modelKey][`${metric}_predicted`] ||
+        !data[modelKey][`${metric}_bagged`] ||
+        !data[modelKey][`${metric}_noise`] ) {
         console.error(`Missing data for ${model} ${metric}`);
         return;
     }
     
     const actualValues = data[modelKey][`${metric}_actual`];
     const predictedValues = data[modelKey][`${metric}_predicted`];
+    const baggedValues = data[modelKey][`${metric}_bagged`];
+    const noiseValues = data[modelKey][`${metric}_noise`];
     const minVal = Math.min(...actualValues);
     const maxVal = Math.max(...actualValues);
+    const predMinVal = Math.min(...predictedValues);
+    const predMaxVal = Math.max(...predictedValues);
 
     new Chart(ctx, {
         type: 'scatter',
         data: getScatterData(actualValues, predictedValues, minVal, maxVal),
         options: getScatterOptions()
     });
+
+    const ctxBagged = document.getElementById(`${model}-${metric}-bagged-scatter`).getContext('2d');
+
+    new Chart(ctxBagged,{
+        type: 'scatter',
+        data: getBaggedScatterData(predictedValues, baggedValues, predMinVal, predMaxVal),
+        options: getScatterOptions()
+    });
+
+    const ctxNoise = document.getElementById(`${model}-${metric}-noise-scatter`).getContext('2d');
+
+    new Chart(ctxNoise,{
+        type: 'scatter',
+        data: getNoiseScatterData(predictedValues, noiseValues, predMinVal, predMaxVal),
+        options: getScatterOptions()
+    });
 };
+
+const getNoiseScatterData = (actualValues, noiseValues, minVal, maxVal) => {
+    return {
+        datasets: [
+            {
+                label: 'With Gaussian Noise Predictions',
+                data: actualValues.map((actual, i) => ({
+                    x: actual,
+                    y: noiseValues[i]
+                })),
+                backgroundColor: 'rgba(246, 165, 59, 0.79)',
+                borderColor: 'rgba(59, 153, 246, 0.8)',
+                pointRadius: 4
+            },
+            {
+                label: 'Original Prediction',
+                data: [
+                    { x: minVal, y: minVal },
+                    { x: maxVal, y: maxVal }
+                ],
+                type: 'line',
+                borderColor: 'rgba(220, 38, 38, 0.5)',
+                borderDash: [5, 5],
+                pointRadius: 0,
+                fill: false
+            }
+        ]
+    };
+}
+
+const getBaggedScatterData = (actualValues, baggedValues, minVal, maxVal) => {
+    return {
+        datasets: [
+            {
+                label: 'Bagging Predictions',
+                data: actualValues.map((actual, i) => ({
+                    x: actual,
+                    y: baggedValues[i]
+                })),
+                backgroundColor: 'rgba(168, 246, 59, 0.79)',
+                borderColor: 'rgba(187, 59, 246, 0.8)',
+                pointRadius: 4
+            },
+            {
+                label: 'Original Predictions',
+                data: [
+                    { x: minVal, y: minVal },
+                    { x: maxVal, y: maxVal }
+                ],
+                type: 'line',
+                borderColor: 'rgba(220, 38, 38, 0.5)',
+                borderDash: [5, 5],
+                pointRadius: 0,
+                fill: false
+            }
+        ]
+    };
+}
 
 const getScatterData = (actualValues, predictedValues, minVal, maxVal) => {
     return {

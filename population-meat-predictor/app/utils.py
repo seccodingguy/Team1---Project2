@@ -2,7 +2,8 @@ import pandas as pd
 import numpy as np
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 from sklearn.model_selection import GridSearchCV
-from sklearn.linear_model import Ridge, Lasso
+from sklearn.linear_model import LinearRegression, Ridge, Lasso
+from sklearn.utils import resample
 
 # Default Year to start the prediction
 year_to_start_prediction = 2022
@@ -52,7 +53,7 @@ def get_meat_consumption_features(meat_category):
 # Function to create a future DataFrame to save the population and meat consumption predictions
 def get_future_years_df(year_to_start_prediction, future_years):
     future_years_df = pd.DataFrame({
-        "Year": np.arange(year_to_start_prediction, year_to_start_prediction + future_years), 
+        "Year": np.arange(year_to_start_prediction, year_to_start_prediction + future_years),
         "Beef": [0] * future_years,
         "Sheep and goat": [0] * future_years,
         "Pork": [0] * future_years,
@@ -62,6 +63,40 @@ def get_future_years_df(year_to_start_prediction, future_years):
     })
     
     return future_years_df
+
+# Perform bagging 
+def bagging_model(X_train, y_train, X_test, base_model, n_estimators=10):
+    """
+    Implements bagging for a regression model.
+    
+    Parameters:
+        X_train (array): Training features.
+        y_train (array): Training target values.
+        X_test (array): Test features for predictions.
+        base_model (object): Regression model (e.g., LinearRegression, Lasso, Ridge).
+        n_estimators (int): Number of models (bootstrap samples).
+    
+    Returns:
+        Array: Averaged predictions from the ensemble.
+    """
+    predictions = []
+
+    for _ in range(n_estimators):
+        # Bootstrap sampling
+        X_bootstrap, y_bootstrap = resample(X_train, y_train, replace=True, random_state=None)
+        
+        # Train the base model on the bootstrap sample
+        model = base_model()
+        model.fit(X_bootstrap, y_bootstrap)
+      
+        # Make predictions on the test set
+        predictions.append(model.predict(X_test))
+    
+    # Average the predictions from all models
+    final_prediction = np.mean(predictions, axis=0)
+    
+    return final_prediction
+
 
 def get_lasso_best_score(X_train_scaled, y_train):
     # Define a range of alpha values to test
