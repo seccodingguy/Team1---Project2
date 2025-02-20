@@ -106,7 +106,7 @@ def train_and_predict_lasso(df, country, country_column_name, population_column_
     # Filter data for a specific Entity
     country_entity = country  # Change this to the desired country
     country_entity_data = df.copy()
-    country_entity_data.fillna(0, inplace=True) 
+    #country_entity_data.fillna(0, inplace=True) 
 
     # Feature selection
     # Feature selection
@@ -199,7 +199,7 @@ def train_and_predict_ridge(df, country, country_column_name, population_column_
     print("Entering Ridge.")
     country_entity = country  # Change this to the desired country
     country_entity_data = df.copy()
-    country_entity_data.fillna(0, inplace=True) 
+    #country_entity_data.fillna(0, inplace=True) 
     
     # Feature selection
     features = get_meat_consumption_features(meat_category)
